@@ -1,13 +1,11 @@
 <template>
-  <div class="list-item">
-    <i :class="getIconClass(listItem.type)" />
+  <div class="list-item" v-if="typeFilter === listItem.type || typeFilter === 'ALL'">
+    <i :class="iconClass" />
     <span class="budget-comment">{{listItem.comment}}</span>
-    <span class="budget-value" :class="getTextColorClass(listItem.type)">{{listItem.value}}</span>
+    <span class="budget-value" :class="textColorClass">{{listItem.value}}</span>
     <el-button type="danger" size="mini" @click="deleteDialogVisible(listItem)">Удалить</el-button>
     <DialogDeleteItem
       :listItemDel="listItemDel"
-      :iconClass="iconClass"
-      :textColorClass="textColorClass"
       :dialogVisible="dialogVisible"
       @deleteItem="deleteItem"
       @deleteCancel="deleteCancel"
@@ -25,27 +23,35 @@ export default {
   },
   data: () => ({
     listItemDel: {},
-    iconClass: "",
-    textColorClass: "",
     dialogVisible: false
   }),
   props: {
     listItem: {
       type: Object,
       default: () => ({})
+    },
+    typeFilter: {
+      type: String,
+      default: "ALL"
+    }
+  },
+  computed: {
+    textColorClass() {
+      return this.listItem.type === "OUTCOME"
+        ? "danger"
+        : this.listItem.type === "INCOME"
+        ? "success"
+        : "";
+    },
+    iconClass() {
+      return this.listItem.type === "OUTCOME"
+        ? "el-icon-bottom-right danger"
+        : this.listItem.type === "INCOME"
+        ? "el-icon-top-right success"
+        : "";
     }
   },
   methods: {
-    getIconClass(type) {
-      return type === "OUTCOME"
-        ? "el-icon-bottom-right danger"
-        : type === "INCOME"
-        ? "el-icon-top-right success"
-        : "";
-    },
-    getTextColorClass(type) {
-      return type === "OUTCOME" ? "danger" : type === "INCOME" ? "success" : "";
-    },
     deleteItem(id) {
       this.$emit("deleteItem", id);
     },
@@ -54,8 +60,6 @@ export default {
     },
     deleteDialogVisible(listItem) {
       this.listItemDel = { ...listItem };
-      this.iconClass = this.getIconClass(listItem.type);
-      this.textColorClass = this.getTextColorClass(listItem.type);
       this.dialogVisible = true;
     }
   }

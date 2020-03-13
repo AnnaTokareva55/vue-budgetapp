@@ -22,17 +22,25 @@ export default {
       type: Object,
       default: () => ({})
     },
-    iconClass: {
-      type: String,
-      default: ""
-    },
-    textColorClass: {
-      type: String,
-      default: ""
-    },
     dialogVisible: {
       type: Boolean,
       default: false
+    }
+  },
+  computed: {
+    textColorClass() {
+      return this.listItemDel.type === "OUTCOME"
+        ? "danger"
+        : this.listItemDel.type === "INCOME"
+        ? "success"
+        : "";
+    },
+    iconClass() {
+      return this.listItemDel.type === "OUTCOME"
+        ? "el-icon-bottom-right danger"
+        : this.listItemDel.type === "INCOME"
+        ? "el-icon-top-right success"
+        : "";
     }
   },
   methods: {
