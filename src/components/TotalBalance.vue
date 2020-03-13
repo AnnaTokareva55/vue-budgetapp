@@ -1,5 +1,5 @@
 <template>
-  <div class="total-value">Текущий баланс: {{total}}</div>
+  <div class="total-value" :class="textColorClass">Текущий баланс: {{total}}</div>
 </template>
 
 <script>
@@ -9,6 +9,11 @@ export default {
     total: {
       type: Number,
       default: 0
+    }
+  },
+  computed: {
+    textColorClass() {
+      return this.total < 0 ? "danger" : this.total > 0 ? "success" : "";
     }
   }
 };
@@ -20,5 +25,13 @@ export default {
   text-transform: uppercase;
   padding: 20px;
   text-align: center;
+}
+
+.danger {
+  color: #f56c6c;
+}
+
+.success {
+  color: #67c23a;
 }
 </style>

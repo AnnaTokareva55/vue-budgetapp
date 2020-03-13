@@ -8,7 +8,7 @@
           prop="type"
           placeholder="Выберите тип..."
         >
-          <el-option label="Приход" value="INCOME"></el-option>
+          <el-option label="Доход" value="INCOME"></el-option>
           <el-option label="Расход" value="OUTCOME"></el-option>
         </el-select>
       </el-form-item>
@@ -28,46 +28,59 @@
 <script>
 export default {
   name: "Form",
-  data: () => ({
-    formData: {
-      type: "INCOME",
-      comment: "",
-      value: 0
-    },
-    rules: {
-      type: [
-        {
-          required: true,
-          message: "Необходимо выбрать тип данных.",
-          trigger: "blur"
-        }
-      ],
-      comment: [
-        {
-          required: true,
-          message: "Необходимо добавить комментарий.",
-          trigger: "blur"
-        }
-      ],
-      value: [
-        {
-          required: true,
-          message: "Необходимо ввести сумму.",
-          trigger: "change"
-        },
-        {
-          required: true,
-          message: "Необходимо ввести число.",
-          trigger: "change"
-        }
-      ]
-    }
-  }),
+  data: () => {
+    var validateSum = (rule, value, callback) => {
+      if (typeof value !== "number") {
+        callback(new Error("Необходимо ввести число."));
+      } else if (value < 0) {
+        callback(new Error("Сумма должна быть положительной."));
+      } else if (value == 0) {
+        callback(new Error("Необходимо ввести сумму."));
+      } else callback();
+    };
+    return {
+      formData: {
+        type: "INCOME",
+        comment: "",
+        value: 0
+      },
+      rules: {
+        type: [
+          {
+            required: true,
+            message: "Необходимо выбрать тип данных.",
+            trigger: "blur"
+          }
+        ],
+        comment: [
+          {
+            required: true,
+            message: "Необходимо добавить комментарий.",
+            trigger: "blur"
+          }
+        ],
+        value: [
+          {
+            validator: validateSum,
+            trigger: "change"
+          }
+        ]
+      }
+    };
+  },
   methods: {
     onSubmit() {
+      console.log(111);
       this.$refs.addItemForm.validate(valid => {
         if (valid) {
-          this.$emit("submitForm", { ...this.formData });
+          console.log(222);
+          const type = this.formData.type;
+          const coefficient =
+            type === "INCOME" ? 1 : type === "OUTCOME" ? -1 : 0;
+          this.$emit("submitForm", {
+            ...this.formData,
+            value: (this.formData.value *= coefficient)
+          });
           this.$refs.addItemForm.resetFields();
         }
       });
