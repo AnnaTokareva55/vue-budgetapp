@@ -22,13 +22,13 @@ export default {
     list: {
       1: {
         type: "INCOME",
-        value: 200,
+        value: 100000,
         comment: "Поступление зарплаты.",
         id: 1
       },
       2: {
         type: "OUTCOME",
-        value: -45,
+        value: -5000,
         comment: "Оплата к/у.",
         id: 2
       }
@@ -65,5 +65,11 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.danger {
+  color: #f56c6c;
+}
+.success {
+  color: #67c23a;
 }
 </style>

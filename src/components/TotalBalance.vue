@@ -26,12 +26,4 @@ export default {
   padding: 20px;
   text-align: center;
 }
-
-.danger {
-  color: #f56c6c;
-}
-
-.success {
-  color: #67c23a;
-}
 </style>

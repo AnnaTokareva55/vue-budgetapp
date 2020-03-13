@@ -1,8 +1,11 @@
 <template>
   <el-dialog title="Удалить из истории бюджета?" :visible.sync="dialogVisible" width="30%">
     <div class="list-item">
-      <span class="budget-comment">{{listItemDel.comment}}</span>
-      <span class="budget-value">{{listItemDel.value}}</span>
+      <div>
+        <i :class="iconClass" />
+        <span class="budget-comment">{{listItemDel.comment}}</span>
+      </div>
+      <span class="budget-value" :class="textColorClass">{{listItemDel.value}}</span>
     </div>
     <span slot="footer" class="dialog-footer">
       <el-button @click="deleteCancel">Отмена</el-button>
@@ -18,6 +21,14 @@ export default {
     listItemDel: {
       type: Object,
       default: () => ({})
+    },
+    iconClass: {
+      type: String,
+      default: ""
+    },
+    textColorClass: {
+      type: String,
+      default: ""
     },
     dialogVisible: {
       type: Boolean,

@@ -1,10 +1,13 @@
 <template>
   <div class="list-item">
+    <i :class="getIconClass(listItem.type)" />
     <span class="budget-comment">{{listItem.comment}}</span>
-    <span class="budget-value">{{listItem.value}}</span>
+    <span class="budget-value" :class="getTextColorClass(listItem.type)">{{listItem.value}}</span>
     <el-button type="danger" size="mini" @click="deleteDialogVisible(listItem)">Удалить</el-button>
     <DialogDeleteItem
       :listItemDel="listItemDel"
+      :iconClass="iconClass"
+      :textColorClass="textColorClass"
       :dialogVisible="dialogVisible"
       @deleteItem="deleteItem"
       @deleteCancel="deleteCancel"
@@ -22,6 +25,8 @@ export default {
   },
   data: () => ({
     listItemDel: {},
+    iconClass: "",
+    textColorClass: "",
     dialogVisible: false
   }),
   props: {
@@ -31,6 +36,16 @@ export default {
     }
   },
   methods: {
+    getIconClass(type) {
+      return type === "OUTCOME"
+        ? "el-icon-bottom-right danger"
+        : type === "INCOME"
+        ? "el-icon-top-right success"
+        : "";
+    },
+    getTextColorClass(type) {
+      return type === "OUTCOME" ? "danger" : type === "INCOME" ? "success" : "";
+    },
     deleteItem(id) {
       this.$emit("deleteItem", id);
     },
@@ -39,6 +54,8 @@ export default {
     },
     deleteDialogVisible(listItem) {
       this.listItemDel = { ...listItem };
+      this.iconClass = this.getIconClass(listItem.type);
+      this.textColorClass = this.getTextColorClass(listItem.type);
       this.dialogVisible = true;
     }
   }
