@@ -81,6 +81,7 @@ export default {
     },
     /**
      * Открытие диалогового окна для подтверждения удаления.
+     * @param {object} listItem - объект для удаления.
      */
     deleteDialogVisible(listItem) {
       this.listItemDel = { ...listItem };
