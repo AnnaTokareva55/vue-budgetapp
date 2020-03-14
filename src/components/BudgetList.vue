@@ -40,6 +40,10 @@ export default {
     }
   },
   computed: {
+    /**
+     * Проверка наличия в list объектов для вывода на страницу.
+     * @returns {boolean} - true, если подходящих объектов нет.
+     */
     isEmpty() {
       if (!Object.keys(this.list).length) return true;
       if (this.typeFilter !== "ALL") {
@@ -51,9 +55,17 @@ export default {
     }
   },
   methods: {
+    /**
+     * Событие клика по кнопке "Удалить"(передается в родительский компонент).
+     * @param {strind} id - id элемента списка в истории бюджета.
+     */
     deleteItem(id) {
       this.$emit("deleteItem", id);
     },
+    /**
+     * Фильтрация списка с историей бюджета по выбранному типу.
+     * @param {string} typeFilter - тип фильтрации.
+     */
     showFiltered(typeFilter) {
       this.typeFilter = typeFilter;
     }

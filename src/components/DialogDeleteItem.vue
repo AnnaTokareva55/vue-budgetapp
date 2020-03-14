@@ -28,6 +28,9 @@ export default {
     }
   },
   computed: {
+    /**
+     * Определение цвета текста с суммой дохода/расхода.
+     */
     textColorClass() {
       return this.listItemDel.type === "OUTCOME"
         ? "danger"
@@ -35,6 +38,9 @@ export default {
         ? "success"
         : "";
     },
+    /**
+     * Определение иконки элемента списка в диалоговм окне.
+     */
     iconClass() {
       return this.listItemDel.type === "OUTCOME"
         ? "el-icon-bottom-right danger"
@@ -44,9 +50,16 @@ export default {
     }
   },
   methods: {
+    /**
+     * Событие клика по кнопке "Удалить"(передается в родительский компонент).
+     * @param {strind} id - id элемента списка в истории бюджета.
+     */
     deleteItem(id) {
       this.$emit("deleteItem", id);
     },
+    /**
+     * Событие клика по кнопке "Отмена" (передается в родительский компонент).
+     */
     deleteCancel() {
       this.$emit("deleteCancel");
     }

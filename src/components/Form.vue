@@ -69,11 +69,12 @@ export default {
     };
   },
   methods: {
+    /**
+     * Обработчик события отправки формы.
+     */
     onSubmit() {
-      console.log(111);
       this.$refs.addItemForm.validate(valid => {
         if (valid) {
-          console.log(222);
           const type = this.formData.type;
           const coefficient =
             type === "INCOME" ? 1 : type === "OUTCOME" ? -1 : 0;

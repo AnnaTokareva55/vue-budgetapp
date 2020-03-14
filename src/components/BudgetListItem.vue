@@ -1,5 +1,5 @@
 <template>
-  <div class="list-item" v-if="typeFilter === listItem.type || typeFilter === 'ALL'">
+  <div class="list-item" v-if="isShow">
     <i :class="iconClass" />
     <span class="budget-comment">{{listItem.comment}}</span>
     <span class="budget-value" :class="textColorClass">{{listItem.value}}</span>
@@ -36,6 +36,17 @@ export default {
     }
   },
   computed: {
+    /**
+     * Проверка соответствия типа элемента (доход/расход) типу выбранной фильтрации.
+     */
+    isShow() {
+      return (
+        this.typeFilter === this.listItem.type || this.typeFilter === "ALL"
+      );
+    },
+    /**
+     * Определение цвета текста с суммой дохода/расхода.
+     */
     textColorClass() {
       return this.listItem.type === "OUTCOME"
         ? "danger"
@@ -43,6 +54,9 @@ export default {
         ? "success"
         : "";
     },
+    /**
+     * Определение иконки элемента списка в истории бюджета.
+     */
     iconClass() {
       return this.listItem.type === "OUTCOME"
         ? "el-icon-bottom-right danger"
@@ -52,12 +66,22 @@ export default {
     }
   },
   methods: {
+    /**
+     * Событие клика по кнопке "Удалить"(передается в родительский компонент).
+     * @param {strind} id - id элемента списка в истории бюджета.
+     */
     deleteItem(id) {
       this.$emit("deleteItem", id);
     },
+    /**
+     * Отмена удаления и закрытие диалогового окна.
+     */
     deleteCancel() {
       this.dialogVisible = false;
     },
+    /**
+     * Открытие диалогового окна для подтверждения удаления.
+     */
     deleteDialogVisible(listItem) {
       this.listItemDel = { ...listItem };
       this.dialogVisible = true;

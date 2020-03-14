@@ -12,6 +12,9 @@ export default {
     }
   },
   computed: {
+    /**
+     * Определение цвета текста с текущим балансом.
+     */
     textColorClass() {
       return this.total < 0 ? "danger" : this.total > 0 ? "success" : "";
     }

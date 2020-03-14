@@ -35,6 +35,9 @@ export default {
     }
   }),
   computed: {
+    /**
+     * Расчет текущего баланса.
+     */
     totalBalance() {
       return Object.values(this.list).reduce(
         (acc, item) => acc + item.value,
@@ -43,9 +46,17 @@ export default {
     }
   },
   methods: {
+    /**
+     * Удаление объекта из list.
+     * @param {string} id - id объекта.
+     */
     onDeleteItem(id) {
       this.$delete(this.list, id);
     },
+    /**
+     * Добавление нового объекта в list.
+     * @param {object} data - новый объект для добавления.
+     */
     onFormSubmit(data) {
       const newObj = {
         ...data,
